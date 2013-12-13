@@ -28,6 +28,16 @@ class MailManager
     return $this->subject;
   }
   
+  public function setBody($body)
+  {
+    $this->body = $body;
+  }
+  
+  public function getBody()
+  {
+    return $this->body;
+  }
+  
   public function addRecipient($emailAddress)
   {
     if (filter_var($emailAddress, FILTER_VALIDATE_EMAIL))
@@ -79,5 +89,8 @@ class MailManager
   public function send()
   {
     $this->validate();
+	
+	// Debugging for the moment
+	print 'Email sent';
   }
 }
