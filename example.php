@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('Europe/London');
+
 require 'config.inc.php';
 require 'MailManager.php';
 
