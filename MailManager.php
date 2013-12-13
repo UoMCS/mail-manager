@@ -42,7 +42,7 @@ class MailManager
 
       if (!empty($schema))
       {
-        $result = $this->connect->query($schema);
+        $result = $this->connection->query($schema);
       }
     }
   }
