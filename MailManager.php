@@ -32,7 +32,7 @@ class MailManager
   private function createLogTable()
   {
     // First check if table exists
-    $sql = "SELECT id FROM mail_message_log";
+    $sql = 'SELECT id FROM mail_message_log';
     $result = $this->connection->query($sql);
 
     // Table does not exist, so create it
