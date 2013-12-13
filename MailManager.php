@@ -8,6 +8,7 @@ class MailManager
   private $body = '';
 
   private $log_schema_file = 'logging.sql';
+  private $log_table = 'mail_manager_log';
   
   private $permittedDomains = array('manchester.ac.uk');
   private $maxRecipientsOneMessage = 6;
@@ -49,7 +50,7 @@ class MailManager
 
   private function countEmailsSent()
   {
-    $sql = 'SELECT id FROM main_manager_log WHERE log_time < ?';
+    $sql = 'SELECT id FROM ' . $log_table . ' WHERE log_time < ?';
     $statement = $this->connection->prepare($sql);
     $statement->bind_param('s', $this->rateLimitCutoff);
     $statement->execute();
