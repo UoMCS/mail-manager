@@ -136,6 +136,14 @@ class MailManager
     {
       throw new Exception('Too many recipients, maximum allowed: ' . $this->maxRecipients);
     }
+	
+	// 5. Rate limit total number of messages
+	$emailsSent = $this->countEmailsSent();
+	
+	if ($emailsSent >= $this->rateLimitMaxEmails)
+	{
+	  throw new Exception('Rate limit exceeded');
+	}
   }
   
   public function send()
