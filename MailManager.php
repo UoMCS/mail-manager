@@ -1,3 +1,5 @@
+<?php
+
 class MailManager
 {
   private $dbhost = 'dbhost.cs.manchester.ac.uk';
