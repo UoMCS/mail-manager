@@ -133,9 +133,9 @@ class MailManager
     }
 
     // 4. Rate limit number of recipients
-    if (count($this->recipients) > $this-maxRecipientsOneMessage)
+    if (count($this->recipients) > $this->maxRecipientsOneMessage)
     {
-      throw new Exception('Too many recipients, maximum allowed: ' . $this->maxRecipients);
+      throw new Exception('Too many recipients, maximum allowed: ' . $this->maxRecipientsOneMessage);
     }
 	
 	// 5. Rate limit total number of messages
