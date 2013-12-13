@@ -2,7 +2,6 @@
 
 class MailManager
 {
-  private $dbhost = 'dbhost.cs.manchester.ac.uk';
   private $connection = null;
   private $recipients = array();
   private $subject = '';
@@ -16,9 +15,9 @@ class MailManager
   private $rateLimitCutoff;
   private $rateLimitMaxEmails = 60;
 
-  public function __construct($username, $password, $dbname)
+  public function __construct($dbhost, $username, $password, $dbname)
   {
-    $this->connection = new mysqli($this->dbhost, $username, $password, $dbname);
+    $this->connection = new mysqli($dbhost, $username, $password, $dbname);
 	
     if ($connection->connect_error)
     {
