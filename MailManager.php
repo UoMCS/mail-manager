@@ -50,7 +50,7 @@ class MailManager
 
   private function countEmailsSent()
   {
-    $sql = 'SELECT id FROM ' . $log_table . ' WHERE log_time < ?';
+    $sql = 'SELECT id FROM ' . $this->log_table . ' WHERE log_time < ?';
     $statement = $this->connection->prepare($sql);
     $statement->bind_param('s', $this->rateLimitCutoff);
     $statement->execute();
