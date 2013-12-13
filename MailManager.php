@@ -25,6 +25,8 @@ class MailManager
     }
 
     $this->rateLimitCutoff = date('Y-m-d H:i:s', strtotime('-1 hour'));
+	
+	$this->createLogTable();
   }
 
   private function createLogTable()
