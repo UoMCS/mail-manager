@@ -2,8 +2,8 @@
 
 date_default_timezone_set('Europe/London');
 
-require 'config.inc.php';
-require 'MailManager.php';
+require_once 'config.inc.php';
+require_once 'MailManager.php';
 
 $mm = new MailManager($database_host, $database_user, $database_pass, $database_name);
 
