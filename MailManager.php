@@ -7,6 +7,7 @@ class MailManager
   private $body = '';
   
   private $permittedDomains = array('manchester.ac.uk');
+  private $maxRecipients = 6;
 
   public function __construct($username, $password, $dbname)
   {
@@ -58,6 +59,11 @@ class MailManager
       throw new Exception('Invalid recipient');
     }
   }
+
+  public function getRecipients()
+  {
+    return $this->recipients;
+  }
   
   /**
     * Check that all requirements have been met before sending email.
@@ -66,7 +72,7 @@ class MailManager
   {
     // Basic checks:
     // 1. Do we have at least one recipient?
-    if (count($this->recipients()) < 1)
+    if (count($this->recipients) < 1)
     {
       throw new Exception('No recipients specified');
     }
@@ -81,6 +87,12 @@ class MailManager
     if (empty($this->body))
     {
       throw new Exception('No message body specified');
+    }
+
+    // 4. Rate limit number of recipients
+    if (count($this->recipients) > $this->maxRecipients)
+    {
+      throw new Exception('Too many recipients, maximum allowed: ' . $this->maxRecipients);
     }
   }
   
