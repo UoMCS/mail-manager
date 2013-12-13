@@ -6,4 +6,9 @@ require 'config.inc.php';
 require 'MailManager.php';
 
 $mm = new MailManager($database_host, $database_user, $database_pass, $database_name);
+
+$mm->setSubject('Test Email');
+$mm->addRecipient('paul.waring@manchester.ac.uk');
+$mm->setBody('Test Body');
+
 $mm->send();
