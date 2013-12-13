@@ -158,7 +158,8 @@ class MailManager
   {
     $sql = 'INSERT INTO ' . $this->log_table . ' (recipient, subject, body, log_time) VALUES (?, ?, ?, ?)';
 	$statement = $this->connection->prepare($sql);
-	$statement->bind_param('ssss', $email_address, $this->subject, $this->body, $this->getCurrentTime());
+	$currentTime = $this->getCurrentTime();
+	$statement->bind_param('ssss', $email_address, $this->subject, $this->body, $currentTime);
 	$statement->execute();
   }
   
