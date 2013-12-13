@@ -7,7 +7,10 @@ class MailManager
   private $body = '';
   
   private $permittedDomains = array('manchester.ac.uk');
-  private $maxRecipients = 6;
+  private $maxRecipientsOneMessage = 6;
+
+  private $rateLimitCutoff;
+  private $rateLimitMaxEmails = 60;
 
   public function __construct($username, $password, $dbname)
   {
@@ -17,6 +20,8 @@ class MailManager
     {
       throw new Exception('Could not connect to database');
     }
+
+    $this->rateLimitCutoff = date('Y-m-d H:i:s', strtotime('-1 hour'));
   }
   
   public function setSubject($subject)
@@ -90,7 +95,7 @@ class MailManager
     }
 
     // 4. Rate limit number of recipients
-    if (count($this->recipients) > $this->maxRecipients)
+    if (count($this->recipients) > $this-maxRecipientsOneMessage 
     {
       throw new Exception('Too many recipients, maximum allowed: ' . $this->maxRecipients);
     }
