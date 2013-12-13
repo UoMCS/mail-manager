@@ -13,8 +13,10 @@ class MailManager
   private $permittedDomains = array('manchester.ac.uk');
   private $maxRecipientsOneMessage = 6;
 
+  private $mysqlDateTimeFormat = 'Y-m-d H:i:s';
   private $rateLimitCutoff;
   private $rateLimitMaxEmails = 60;
+  private $currentTime;
 
   public function __construct($dbhost, $username, $password, $dbname)
   {
@@ -25,7 +27,8 @@ class MailManager
       throw new Exception('Could not connect to database');
     }
 
-    $this->rateLimitCutoff = date('Y-m-d H:i:s', strtotime('-1 hour'));
+    $this->currentTime = date($this->mysqlDateTimeFormat);
+    $this->rateLimitCutoff = date($this->mysqlDateTimeFormat, strtotime('-1 hour'));
 	
 	$this->createLogTable();
   }
@@ -148,9 +151,22 @@ class MailManager
 	}
   }
   
+  private function sendIndividualEmail($email_address)
+  {
+    $sql = 'INSERT INTO ' . $this->log_table . ' (recipient, subject, body, log_time) VALUES (?, ?, ?, ?)';
+	$statement = $this->connection->prepare($sql);
+	$statement->bind_param('ssss', $email_address, $this->subject, $this->body, $this->currentTime);
+	$statement->execute();
+  }
+  
   public function send()
   {
     $this->validate();
+	
+	foreach ($this->recipients as $recipient)
+	{
+	  $this->sendIndividualEmail($recipient);
+	}
 	
     // Debugging for the moment
     print 'Email sent';
