@@ -5,6 +5,8 @@ class MailManager
   private $recipients = array();
   private $subject = '';
   private $body = '';
+
+  private $log_schema_file = 'logging.sql';
   
   private $permittedDomains = array('manchester.ac.uk');
   private $maxRecipientsOneMessage = 6;
@@ -22,6 +24,24 @@ class MailManager
     }
 
     $this->rateLimitCutoff = date('Y-m-d H:i:s', strtotime('-1 hour'));
+  }
+
+  private function createLogTable()
+  {
+    // First check if table exists
+    $sql = "SELECT id FROM mail_message_log";
+    $result = $this->connection->query($sql);
+
+    // Table does not exist, so create it
+    if (!$result)
+    {
+      $schema = file_get_contents($this->log_schema_file);
+
+      if (!empty($schema))
+      {
+        $result = $this->connect->query($schema);
+      }
+    }
   }
   
   public function setSubject($subject)
