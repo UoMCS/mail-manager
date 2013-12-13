@@ -43,6 +43,21 @@ class MailManager
       }
     }
   }
+
+  private function countEmailsSent()
+  {
+    $sql = 'SELECT id FROM main_manager_log WHERE log_time < ?';
+    $statement = $this->connection->prepare($sql);
+    $statement->bind_param('s', $this->rateLimitCutoff);
+    $statement->execute();
+    $result = $statement->get_result();
+
+    $emailsSent = $result->num_rows;
+
+    $statement->close();
+
+    return $emailsSent;
+  }
   
   public function setSubject($subject)
   {
