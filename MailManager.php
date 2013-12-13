@@ -16,7 +16,6 @@ class MailManager
   private $mysqlDateTimeFormat = 'Y-m-d H:i:s';
   private $rateLimitCutoff;
   private $rateLimitMaxEmails = 60;
-  private $currentTime;
 
   public function __construct($dbhost, $username, $password, $dbname)
   {
@@ -26,11 +25,15 @@ class MailManager
     {
       throw new Exception('Could not connect to database');
     }
-
-    $this->currentTime = date($this->mysqlDateTimeFormat);
+	
     $this->rateLimitCutoff = date($this->mysqlDateTimeFormat, strtotime('-1 hour'));
 	
 	$this->createLogTable();
+  }
+  
+  private function getCurrentTime()
+  {
+    return date($this->mysqlDateTimeFormat);
   }
 
   private function createLogTable()
@@ -155,7 +158,7 @@ class MailManager
   {
     $sql = 'INSERT INTO ' . $this->log_table . ' (recipient, subject, body, log_time) VALUES (?, ?, ?, ?)';
 	$statement = $this->connection->prepare($sql);
-	$statement->bind_param('ssss', $email_address, $this->subject, $this->body, $this->currentTime);
+	$statement->bind_param('ssss', $email_address, $this->subject, $this->body, $this->getCurrentTime());
 	$statement->execute();
   }
   
