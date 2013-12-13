@@ -108,7 +108,7 @@ class MailManager
   }
   
   /**
-    * Check that all requirements have been met before sending email.
+    * Check that all requirements (including rate limiting) have been met before sending email.
     */
   public function validate()
   {
@@ -132,7 +132,7 @@ class MailManager
     }
 
     // 4. Rate limit number of recipients
-    if (count($this->recipients) > $this-maxRecipientsOneMessage 
+    if (count($this->recipients) > $this-maxRecipientsOneMessage)
     {
       throw new Exception('Too many recipients, maximum allowed: ' . $this->maxRecipients);
     }
