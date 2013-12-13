@@ -4,6 +4,7 @@ class MailManager
   private $connection = null;
   private $recipients = array();
   private $subject = '';
+  private $body = '';
   
   private $permittedDomains = array('manchester.ac.uk');
 
@@ -15,6 +16,16 @@ class MailManager
 	{
 	  throw new Exception('Could not connect to database');
 	}
+  }
+  
+  public function setSubject($subject)
+  {
+    $this->subject = $subject;
+  }
+  
+  public function getSubject()
+  {
+    return $this->subject;
   }
   
   public function addRecipient($emailAddress)
@@ -36,5 +47,37 @@ class MailManager
 	{
 	  throw new Exception('Invalid recipient');
 	}
+  }
+  
+  /**
+    * Check that all requirements have been met before sending email.
+    */
+  public function validate()
+  {
+    // Basic checks:
+	// 1. Do we have at least one recipient?
+	if (count($this->recipients()) < 1)
+	{
+	  throw new Exception('No recipients specified');
+	}
+	
+	// 2. Do we have a subject?
+	if (empty($this->subject))
+	{
+	  throw new Exception('No subject specified');
+	}
+	
+	// 3. Do we have a message body?
+	if (empty($this->body))
+	{
+	  throw new Exception('No message body specified');
+	}
+	
+	
+  }
+  
+  public function send()
+  {
+    $this->validate();
   }
 }
