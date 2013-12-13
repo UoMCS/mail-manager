@@ -19,7 +19,7 @@ class MailManager
   {
     $this->connection = new mysqli($dbhost, $username, $password, $dbname);
 	
-    if ($connection->connect_error)
+    if ($this->connection->connect_error)
     {
       throw new Exception('Could not connect to database');
     }
