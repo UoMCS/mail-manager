@@ -188,7 +188,7 @@ class MailManager
 	  if ($statement !== FALSE)
 	  {
 	    $currentTime = $this->getCurrentTime();
-	    $statement->bind_param('ssss', $email_address, $this->subject, $this->body, $currentTime);
+	    $statement->bind_param('ssss', $emailAddress, $this->subject, $this->body, $currentTime);
 	    $statement->execute();
 	  }
 	  else
