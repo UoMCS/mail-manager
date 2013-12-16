@@ -182,10 +182,19 @@ class MailManager
     if ($mailSent)
 	{
       $sql = 'INSERT INTO ' . $this->log_table . ' (recipient, subject, body, log_time) VALUES (?, ?, ?, ?)';
+	  
 	  $statement = $this->connection->prepare($sql);
-	  $currentTime = $this->getCurrentTime();
-	  $statement->bind_param('ssss', $email_address, $this->subject, $this->body, $currentTime);
-	  $statement->execute();
+	  
+	  if ($statement !== FALSE)
+	  {
+	    $currentTime = $this->getCurrentTime();
+	    $statement->bind_param('ssss', $email_address, $this->subject, $this->body, $currentTime);
+	    $statement->execute();
+	  }
+	  else
+	  {
+	    throw new Exception('Could not prepare SQL query');
+	  }
 	  
 	  print "Email sent to: $emailAddress\n";
 	}
