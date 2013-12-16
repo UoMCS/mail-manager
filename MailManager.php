@@ -82,16 +82,7 @@ class MailManager
   {
     if (filter_var($emailAddress, FILTER_VALIDATE_EMAIL))
     {
-      list($user, $domain) = explode('@', $emailAddress);
-	  
-      if (in_array($domain, $this->permittedDomains))
-      {
-        $this->recipients[] = $emailAddress;
-      }
-      else
-      {
-        throw new Exception('Recipient does not fall within list of permitted domains');
-      }
+      $this->recipients[] = $emailAddress;
     }
     else
     {
