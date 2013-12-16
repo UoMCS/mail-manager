@@ -166,7 +166,8 @@ class MailManager
   
   private function sendIndividualEmail($emailAddress)
   {
-    $mailSent = mail($emailAddress, $this->subject, $this->body, $this->additionalHeaders, $this->additionalParameters);
+    //$mailSent = mail($emailAddress, $this->subject, $this->body, $this->additionalHeaders, $this->additionalParameters);
+	$mailSent = false;
   
     if ($mailSent)
 	{
