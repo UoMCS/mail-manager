@@ -17,5 +17,5 @@ try
 }
 catch (Exception $e)
 {
-  
+  print $e->getMessage() . "\n";
 }
