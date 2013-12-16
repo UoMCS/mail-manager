@@ -48,24 +48,6 @@ class MailManager
     return date($this->mysqlDateTimeFormat);
   }
 
-  private function createLogTable()
-  {
-    // First check if table exists
-    $sql = 'SELECT id FROM mail_message_log';
-    $result = $this->connection->query($sql);
-
-    // Table does not exist, so create it
-    if ($result === FALSE)
-    {
-      $schema = file_get_contents($this->log_schema_file);
-
-      if (!empty($schema))
-      {
-        $result = $this->connection->query($schema);
-      }
-    }
-  }
-
   private function countEmailsSent()
   {
     $sql = 'SELECT id FROM ' . $this->log_table . ' WHERE log_time < ?';
