@@ -15,8 +15,6 @@ class MailManager
   private $maxRecipientsOneMessage = 6;
 
   private $mysqlDateTimeFormat = 'Y-m-d H:i:s';
-  private $rateLimitCutoff;
-  private $rateLimitMaxEmails = 60;
   
   private $fromAddress;
   
@@ -33,10 +31,7 @@ class MailManager
     }
 	
 	$this->enableMail = $enableMail;
-    $this->rateLimitCutoff = date($this->mysqlDateTimeFormat, strtotime('-1 hour'));
-	
-	$this->createLogTable();
-	
+		
 	$this->fromAddress = 'paul.waring@manchester.ac.uk';
 	
 	$additionalHeaders = $this->fromAddress;
@@ -138,14 +133,6 @@ class MailManager
     {
       throw new Exception('Too many recipients, maximum allowed: ' . $this->maxRecipientsOneMessage);
     }
-	
-	// 5. Rate limit total number of messages
-	$emailsSent = $this->countEmailsSent();
-	
-	if ($emailsSent >= $this->rateLimitMaxEmails)
-	{
-	  throw new Exception('Rate limit exceeded');
-	}
   }
   
   private function sendIndividualEmail($emailAddress)
