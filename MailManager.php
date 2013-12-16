@@ -1,27 +1,32 @@
 <?php
 
+/**
+ * Class for abstracting the sending of email. Some local checks are performed
+ * in order to catch obvious/simple errors which do not require database access,
+ * followed by a connection to a web service which performs extra checks, including
+ * authentication and rate limiting, before sending the email.
+ */
 class MailManager
 {
-  private $connection = null;
   private $recipients = array();
   private $subject = '';
   private $body = '';
+  
+  private $dbhost;
+  private $username;
+  private $password;
+  private $dbname;
 
   private $enableMail = false;
-    
-  private $fromAddress;
-  
-  private $additionalHeaders;
-  private $additionalParameters;
 
   public function __construct($dbhost, $username, $password, $dbname, $enableMail = false)
   {
-	$this->enableMail = $enableMail;
-		
-	$this->fromAddress = 'paul.waring@manchester.ac.uk';
+    $this->dbhost = $dbhost;
+	$this->username = $username;
+	$this->password = $password;
+	$this->dbname = $dbname;
 	
-	$additionalHeaders = $this->fromAddress;
-	$additionalParameters = '-f' . $this->fromAddress;
+	$this->enableMail = $enableMail;
   }
   
   public function setSubject($subject)
