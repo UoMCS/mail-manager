@@ -17,6 +17,8 @@ class MailManager
   private $rateLimitCutoff;
   private $rateLimitMaxEmails = 60;
   
+  private $fromAddress;
+  
   private $additionalHeaders;
   private $additionalParameters;
 
@@ -33,10 +35,10 @@ class MailManager
 	
 	$this->createLogTable();
 	
-	$from_address = 'paul.waring@manchester.ac.uk';
+	$this->fromAddress = 'paul.waring@manchester.ac.uk';
 	
-	$additionalHeaders = $from_address;
-	$additionalParameters = '-f' . $from_address;
+	$additionalHeaders = $this->fromAddress;
+	$additionalParameters = '-f' . $this->fromAddress;
   }
   
   private function getCurrentTime()
@@ -162,13 +164,24 @@ class MailManager
 	}
   }
   
-  private function sendIndividualEmail($email_address)
+  private function sendIndividualEmail($emailAddress)
   {
-    $sql = 'INSERT INTO ' . $this->log_table . ' (recipient, subject, body, log_time) VALUES (?, ?, ?, ?)';
-	$statement = $this->connection->prepare($sql);
-	$currentTime = $this->getCurrentTime();
-	$statement->bind_param('ssss', $email_address, $this->subject, $this->body, $currentTime);
-	$statement->execute();
+    $mailSent = mail($emailAddress, $this->subject, $this->body, $this->additionalHeaders, $this->additionalParameters);
+  
+    if ($mailSent)
+	{
+      $sql = 'INSERT INTO ' . $this->log_table . ' (recipient, subject, body, log_time) VALUES (?, ?, ?, ?)';
+	  $statement = $this->connection->prepare($sql);
+	  $currentTime = $this->getCurrentTime();
+	  $statement->bind_param('ssss', $email_address, $this->subject, $this->body, $currentTime);
+	  $statement->execute();
+	  
+	  print "Email sent to: $emailAddress\n";
+	}
+	else
+	{
+	  print "Email not sent to: $emailAddress\n";
+	}
   }
   
   public function send()
@@ -179,8 +192,5 @@ class MailManager
 	{
 	  $this->sendIndividualEmail($recipient);
 	}
-	
-    // Debugging for the moment
-    print 'Email sent';
   }
 }
