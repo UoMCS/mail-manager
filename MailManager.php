@@ -128,40 +128,7 @@ class MailManager
   
   private function sendIndividualEmail($emailAddress)
   {
-    $mailSent = false;
-	
-	if ($this->enableMail)
-	{
-      $mailSent = mail($emailAddress, $this->subject, $this->body, $this->additionalHeaders, $this->additionalParameters);
-	}
-	else
-	{
-	  $mailSent = true;
-	}
-  
-    if ($mailSent)
-	{
-      $sql = 'INSERT INTO ' . $this->log_table . ' (recipient, subject, body, log_time) VALUES (?, ?, ?, ?)';
-	  
-	  $statement = $this->connection->prepare($sql);
-	  
-	  if ($statement !== FALSE)
-	  {
-	    $currentTime = $this->getCurrentTime();
-	    $statement->bind_param('ssss', $emailAddress, $this->subject, $this->body, $currentTime);
-	    $statement->execute();
-	  }
-	  else
-	  {
-	    throw new Exception('Could not prepare SQL query');
-	  }
-	  
-	  print "Email sent to: $emailAddress\n";
-	}
-	else
-	{
-	  print "Email not sent to: $emailAddress\n";
-	}
+    // TODO: Add call to web service
   }
   
   public function send()
