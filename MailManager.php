@@ -55,7 +55,7 @@ class MailManager
     $result = $this->connection->query($sql);
 
     // Table does not exist, so create it
-    if (!$result)
+    if ($result === FALSE)
     {
       $schema = file_get_contents($this->log_schema_file);
 
