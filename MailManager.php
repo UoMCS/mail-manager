@@ -16,6 +16,9 @@ class MailManager
   private $mysqlDateTimeFormat = 'Y-m-d H:i:s';
   private $rateLimitCutoff;
   private $rateLimitMaxEmails = 60;
+  
+  private $additionalHeaders;
+  private $additionalParameters;
 
   public function __construct($dbhost, $username, $password, $dbname)
   {
@@ -29,6 +32,11 @@ class MailManager
     $this->rateLimitCutoff = date($this->mysqlDateTimeFormat, strtotime('-1 hour'));
 	
 	$this->createLogTable();
+	
+	$from_address = 'paul.waring@manchester.ac.uk';
+	
+	$additionalHeaders = $from_address;
+	$additionalParameters = '-f' . $from_address;
   }
   
   private function getCurrentTime()
