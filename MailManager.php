@@ -96,7 +96,7 @@ class MailManager
   }
   
   /**
-    * Check that all requirements (including rate limiting) have been met before sending email.
+    * Check that all requirements have been met before attempting to send email.
     */
   public function validate()
   {
