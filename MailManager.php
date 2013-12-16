@@ -9,6 +9,7 @@ class MailManager
 
   private $log_schema_file = 'logging.sql';
   private $log_table = 'mail_manager_log';
+  private $enableMail = false;
   
   private $permittedDomains = array('manchester.ac.uk');
   private $maxRecipientsOneMessage = 6;
@@ -22,7 +23,7 @@ class MailManager
   private $additionalHeaders;
   private $additionalParameters;
 
-  public function __construct($dbhost, $username, $password, $dbname)
+  public function __construct($dbhost, $username, $password, $dbname, $enableMail = false)
   {
     $this->connection = new mysqli($dbhost, $username, $password, $dbname);
 	
@@ -31,6 +32,7 @@ class MailManager
       throw new Exception('Could not connect to database');
     }
 	
+	$this->enableMail = $enableMail;
     $this->rateLimitCutoff = date($this->mysqlDateTimeFormat, strtotime('-1 hour'));
 	
 	$this->createLogTable();
@@ -166,8 +168,16 @@ class MailManager
   
   private function sendIndividualEmail($emailAddress)
   {
-    //$mailSent = mail($emailAddress, $this->subject, $this->body, $this->additionalHeaders, $this->additionalParameters);
-	$mailSent = false;
+    $mailSent = false;
+	
+	if ($this->enableMail)
+	{
+      $mailSent = mail($emailAddress, $this->subject, $this->body, $this->additionalHeaders, $this->additionalParameters);
+	}
+	else
+	{
+	  $mailSent = true;
+	}
   
     if ($mailSent)
 	{
