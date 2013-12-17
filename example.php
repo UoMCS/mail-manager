@@ -7,7 +7,9 @@ require_once 'MailManager.php';
 
 try
 {
-  $mm = new MailManager($database_host, $database_user, $database_pass, $database_name, false);
+  $enable_mail = isset($_GET['enablemail']) ? boolval($_GET['enablemail']) : false;
+
+  $mm = new MailManager($database_host, $database_user, $database_pass, $database_name, $enable_mail);
 
   $mm->setSubject('Test Email');
   $mm->addRecipient('paul.waring@manchester.ac.uk');
