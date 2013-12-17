@@ -3,8 +3,6 @@
 define('MM_MAX_RECIPIENTS', 5);
 define('MM_WEB_SERVICE_URI', 'http://mailmanager.cs.manchester.ac.uk');
 
-require_once 'Zend/Http/Client.php';
-
 /**
  * Class for abstracting the sending of email. Some local checks are performed
  * in order to catch obvious/simple errors which do not require database access,
@@ -115,20 +113,16 @@ class MailManager
 	$parameters['subject'] = $this->subject;
 	$parameters['body'] = $this->body;
 	
-	$client = new Zend_Http_Client();
-	$client->setUri(MM_WEB_SERVICE_URI);
-	$client->setMethod(Zend_Http_Client::POST);
-	$client->setParameterPost($parameters);
+	$client = curl_init(MM_WEB_SERVICE_URI);
+	curl_setopt($client, CURLOPT_RETURNTRANSFER, TRUE);
+	curl_setopt($client, CURLOPT_POST, TRUE);
+	curl_setopt($client, CURLOPT_POSTFIELDS, $parameters);
 	
-	if ($this->enable_email)
-	{
-	  $response = $client->request();
-	  
-	  if ($response->isError())
-	  {
-	    throw new Exception('Connection to web service failed. Status: ' . $response->getStatus() . '. Message: ' . $response->getMessage());
-	  }
-	}
+	$response = curl_exec($client);
+	
+	print_r($response);
+	
+	curl_close($client);
   }
   
   public function send()
