@@ -11,9 +11,9 @@ try
 
   $mm = new MailManager($database_host, $database_user, $database_pass, $database_name, $enable_mail);
 
-  $mm->setSubject('Test Email');
-  $mm->addRecipient('paul.waring@manchester.ac.uk');
-  $mm->setBody('Test Body');
+  $mm->set_subject('Test Email');
+  $mm->add_recipient('paul.waring@manchester.ac.uk');
+  $mm->set_body('Test Body');
 
   $mm->send();
 }
