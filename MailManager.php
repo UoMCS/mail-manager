@@ -3,6 +3,8 @@
 define('MM_MAX_RECIPIENTS', 5);
 define('MM_WEB_SERVICE_URI', 'http://mailmanager.cs.manchester.ac.uk');
 
+require_once 'Zend/Http/Client.php';
+
 /**
  * Class for abstracting the sending of email. Some local checks are performed
  * in order to catch obvious/simple errors which do not require database access,
@@ -113,7 +115,15 @@ class MailManager
 	$parameters['subject'] = $this->subject;
 	$parameters['body'] = $this->body;
 	
+	$client = new Zend_Http_Client();
+	$client->setUri(MM_WEB_SERVICE_URI);
+	$client->setMethod(Zend_Http_Client::POST);
+	$client->setParameterPost($parameters);
 	
+	if ($this->enable_email)
+	{
+	  $response = $client->request();
+	}
   }
   
   public function send()
