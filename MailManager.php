@@ -123,6 +123,11 @@ class MailManager
 	if ($this->enable_email)
 	{
 	  $response = $client->request();
+	  
+	  if ($response->isError())
+	  {
+	    throw new Exception('Connection to web service failed. Status: ' . $response->getStatus() . '. Message: ' . $response->getMessage());
+	  }
 	}
   }
   
