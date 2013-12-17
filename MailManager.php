@@ -121,9 +121,11 @@ class MailManager
 	
 	$response = curl_exec($client);
 	
-	print_r($response);
+	var_dump($response);
 	
 	curl_close($client);
+	
+	print "Email sent to: $email_address\n";
   }
   
   public function send()
