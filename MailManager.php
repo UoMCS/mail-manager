@@ -19,43 +19,43 @@ class MailManager
   private $password;
   private $dbname;
 
-  private $enableMail = false;
+  private $enable_email = false;
 
-  public function __construct($dbhost, $username, $password, $dbname, $enableMail = false)
+  public function __construct($dbhost, $username, $password, $dbname, $enable_email = false)
   {
     $this->dbhost = $dbhost;
 	$this->username = $username;
 	$this->password = $password;
 	$this->dbname = $dbname;
 	
-	$this->enableMail = $enableMail;
+	$this->enable_email = $enable_email;
   }
   
-  public function setSubject($subject)
+  public function set_subject($subject)
   {
     $this->subject = $subject;
   }
   
-  public function getSubject()
+  public function get_subject()
   {
     return $this->subject;
   }
   
-  public function setBody($body)
+  public function set_body($body)
   {
     $this->body = $body;
   }
   
-  public function getBody()
+  public function get_body()
   {
     return $this->body;
   }
   
-  public function addRecipient($emailAddress)
+  public function add_recipient($email_address)
   {
-    if (filter_var($emailAddress, FILTER_VALIDATE_EMAIL))
+    if (filter_var($email_address, FILTER_VALIDATE_EMAIL))
     {
-      $this->recipients[] = $emailAddress;
+      $this->recipients[] = $email_address;
     }
     else
     {
@@ -63,7 +63,7 @@ class MailManager
     }
   }
 
-  public function getRecipients()
+  public function get_recipients()
   {
     return $this->recipients;
   }
@@ -99,7 +99,7 @@ class MailManager
 	}
   }
   
-  private function sendIndividualEmail($emailAddress)
+  private function send_individual_email($emailAddress)
   {
     // TODO: Add call to web service
   }
@@ -110,7 +110,7 @@ class MailManager
 	
 	foreach ($this->recipients as $recipient)
 	{
-	  $this->sendIndividualEmail($recipient);
+	  $this->send_individual_email($recipient);
 	}
   }
 }
