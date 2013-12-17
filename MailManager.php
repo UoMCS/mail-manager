@@ -1,6 +1,7 @@
 <?php
 
 define('MM_MAX_RECIPIENTS', 5);
+define('MM_WEB_SERVICE_URI', 'http://mailmanager.cs.manchester.ac.uk');
 
 /**
  * Class for abstracting the sending of email. Some local checks are performed
@@ -99,9 +100,20 @@ class MailManager
 	}
   }
   
-  private function send_individual_email($emailAddress)
+  private function send_individual_email($email_address)
   {
     // TODO: Add call to web service
+	$parameters = array();
+	$parameters['username'] = $this->username;
+	$parameters['password'] = $this->password;
+	$parameters['host'] = $this->dbhost;
+	$parameters['dbname'] = $this->dbname;
+	
+	$parameters['recipient'] = $email_address;
+	$parameters['subject'] = $this->subject;
+	$parameters['body'] = $this->body;
+	
+	
   }
   
   public function send()
