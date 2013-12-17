@@ -102,7 +102,8 @@ class MailManager
   
   private function send_individual_email($email_address)
   {
-    // TODO: Add call to web service
+    print "Attempting to send email to: $email_address\n";
+	
 	$parameters = array();
 	$parameters['username'] = $this->username;
 	$parameters['password'] = $this->password;
