@@ -15,3 +15,7 @@ $database_user
 $database_pass
 $database_name
 ```
+
+Requires a copy of the related web service in order to function:
+
+https://github.com/pwaring/mail-manager-ws
