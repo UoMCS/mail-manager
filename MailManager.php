@@ -1,5 +1,7 @@
 <?php
 
+define('MM_MAX_RECIPIENTS', 5);
+
 /**
  * Class for abstracting the sending of email. Some local checks are performed
  * in order to catch obvious/simple errors which do not require database access,
@@ -89,6 +91,12 @@ class MailManager
     {
       throw new Exception('No message body specified');
     }
+	
+	// 4. Simple check for maximum number of recipients
+	if (count($this->recipients) > MM_MAX_RECIPIENTS)
+	{
+	  throw new Exception('Too many recipients, maximum allowed is: ' . MM_MAX_RECIPIENTS);
+	}
   }
   
   private function sendIndividualEmail($emailAddress)
