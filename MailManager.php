@@ -128,7 +128,9 @@ class MailManager
 	}
 	else
 	{
+	  $error = curl_error($client);
 	  print "Email not sent to: $email_address\n";
+	  print "Error: $error\n";
 	}
 	
 	curl_close($client);
