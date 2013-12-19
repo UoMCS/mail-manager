@@ -1,8 +1,0 @@
-CREATE TABLE mail_manager_log
-(
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  recipient VARCHAR(255) NOT NULL,
-  subject VARCHAR(255) NOT NULL,
-  body TEXT NOT NULL,
-  log_time DATETIME NOT NULL
-);
