@@ -134,6 +134,15 @@ class MailManager
 	    $error = curl_error($client);
 		throw new Exception($error);
 	  }
+	  else
+	  {
+	    $status_code = curl_getinfo($client, CURLINFO_HTTP_CODE);
+		
+		if ($status_code == 429)
+		{
+		  throw new Exception('Rate limit exceeded');
+		}
+	  }
 	}
 	
 	curl_close($client);
