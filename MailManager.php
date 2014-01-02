@@ -113,6 +113,7 @@ class MailManager
 	$parameters['body'] = $this->body;
 	
 	$client = curl_init(MM_WEB_SERVICE_URI);
+	curl_setopt($client, CURLOPT_RETURNTRANSFER, TRUE);
 	curl_setopt($client, CURLOPT_POST, TRUE);
 	curl_setopt($client, CURLOPT_POSTFIELDS, $parameters);
 	
