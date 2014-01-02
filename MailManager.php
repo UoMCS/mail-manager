@@ -129,19 +129,11 @@ class MailManager
 	else
 	{
 	  // We managed to make the request, now check what the status was
-	  if (curl_errno($client))
-	  {
-	    $error = curl_error($client);
-		throw new Exception($error);
-	  }
-	  else
-	  {
-	    $response_headers = curl_getinfo($client);
+	  $response_headers = curl_getinfo($client);
 		
-		if ($response_headers['http_code'] == 429)
-		{
-		  throw new Exception($response);
-		}
+      if ($response_headers['http_code'] == 429)
+	  {
+		throw new Exception($response);
 	  }
 	}
 	
