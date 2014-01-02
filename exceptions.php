@@ -13,7 +13,7 @@ try
   $mm->set_subject('Test');
   $mm->set_body('Body');
   
-  $mm->add_recipient('test@example.org');
+  $mm->add_recipient('paul@xk7.net');
   
   $mm->send();
 }
