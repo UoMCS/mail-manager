@@ -136,11 +136,11 @@ class MailManager
 	  }
 	  else
 	  {
-	    $status_code = curl_getinfo($client, CURLINFO_HTTP_CODE);
+	    $response_headers = curl_getinfo($client);
 		
-		if ($status_code == 429)
+		if ($response_headers['http_code'] == 429)
 		{
-		  throw new Exception('Rate limit exceeded');
+		  throw new Exception($response);
 		}
 	  }
 	}
