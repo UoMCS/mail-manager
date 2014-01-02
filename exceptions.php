@@ -9,7 +9,13 @@ require_once 'MailManager.php';
 try
 {
   $mm = new MailManager($database_host, $database_user, $database_pass, $database_name);
+  
+  $mm->setSubject('Test');
+  $mm->setBody('Body');
+  
   $mm->addRecipient('test@example.org');
+  
+  $mm->send();
 }
 catch (Exception $e)
 {

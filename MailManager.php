@@ -121,16 +121,10 @@ class MailManager
 	
 	$response = curl_exec($client);
 	
-	if ($response !== FALSE)
-	{
-	  print "Email sent to: $email_address\n";
-	  var_dump($response);
-	}
-	else
+	if ($response === FALSE)
 	{
 	  $error = curl_error($client);
-	  print "Email not sent to: $email_address\n";
-	  print "Error: $error\n";
+	  throw new Exception($error);
 	}
 	
 	curl_close($client);
