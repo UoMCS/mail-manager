@@ -113,18 +113,27 @@ class MailManager
 	$parameters['body'] = $this->body;
 	
 	$client = curl_init(MM_WEB_SERVICE_URI);
-	curl_setopt($client, CURLOPT_RETURNTRANSFER, TRUE);
 	curl_setopt($client, CURLOPT_POST, TRUE);
 	curl_setopt($client, CURLOPT_POSTFIELDS, $parameters);
 	
+	// Remember, with cURL there are two types of failure:
+	// 1. Failure to make the HTTP request (e.g. host name does not exist).
+	// 2. Failure status code (e.g. 4xx or 5xx).
 	$response = curl_exec($client);
-	
-	var_dump($response);
 	
 	if ($response === FALSE)
 	{
 	  $error = curl_error($client);
 	  throw new Exception($error);
+	}
+	else
+	{
+	  // We managed to make the request, now check what the status was
+	  if (curl_errno)
+	  {
+	    $error = curl_error($client);
+		throw new Exception($error);
+	  }
 	}
 	
 	curl_close($client);
