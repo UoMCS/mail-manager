@@ -10,10 +10,10 @@ try
 {
   $mm = new MailManager($database_host, $database_user, $database_pass, $database_name);
   
-  $mm->setSubject('Test');
-  $mm->setBody('Body');
+  $mm->set_subject('Test');
+  $mm->set_body('Body');
   
-  $mm->addRecipient('test@example.org');
+  $mm->add_recipient('test@example.org');
   
   $mm->send();
 }
@@ -27,16 +27,15 @@ try
 {
   $mm = new MailManager($database_host, $database_user, $database_pass, $database_name);
   
-  $mm->setSubject('Test');
-  $mm->setBody('Body');
+  $mm->set_subject('Test');
+  $mm->set_body('Body');
   
-  $mm->addRecipient('doesnotexist@manchester.ac.uk');
-  $mm->addRecipient('doesnotexist@manchester.ac.uk');
-  $mm->addRecipient('doesnotexist@manchester.ac.uk');
-  $mm->addRecipient('doesnotexist@manchester.ac.uk');
-  $mm->addRecipient('doesnotexist@manchester.ac.uk');
-  $mm->addRecipient('doesnotexist@manchester.ac.uk');
-  $mm->addRecipient('doesnotexist@manchester.ac.uk');
+  $mm->add_recipient('doesnotexist@manchester.ac.uk');
+  $mm->add_recipient('doesnotexist@manchester.ac.uk');
+  $mm->add_recipient('doesnotexist@manchester.ac.uk');
+  $mm->add_recipient('doesnotexist@manchester.ac.uk');
+  $mm->add_recipient('doesnotexist@manchester.ac.uk');
+  $mm->add_recipient('doesnotexist@manchester.ac.uk');
   
   $mm->send();
 }
