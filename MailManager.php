@@ -119,6 +119,8 @@ class MailManager
 	
 	$response = curl_exec($client);
 	
+	var_dump($response);
+	
 	if ($response === FALSE)
 	{
 	  $error = curl_error($client);
