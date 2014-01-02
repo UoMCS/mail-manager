@@ -129,7 +129,7 @@ class MailManager
 	else
 	{
 	  // We managed to make the request, now check what the status was
-	  if (curl_errno)
+	  if (curl_errno($client))
 	  {
 	    $error = curl_error($client);
 		throw new Exception($error);
