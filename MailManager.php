@@ -20,16 +20,12 @@ class MailManager
   private $password;
   private $dbname;
 
-  private $enable_email = false;
-
-  public function __construct($dbhost, $username, $password, $dbname, $enable_email = false)
+  public function __construct($dbhost, $username, $password, $dbname)
   {
     $this->dbhost = $dbhost;
     $this->username = $username;
     $this->password = $password;
     $this->dbname = $dbname;
-    
-    $this->enable_email = $enable_email;
   }
   
   public function set_subject($subject)
