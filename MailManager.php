@@ -19,6 +19,9 @@ class MailManager
   private $username;
   private $password;
   private $dbname;
+  
+  private $client_error_codes = array(400, 401, 429);
+  private $server_error_codes = array(500);
 
   public function __construct($dbhost, $username, $password, $dbname)
   {
@@ -128,9 +131,13 @@ class MailManager
       // We managed to make the request, now check what the status was
       $response_headers = curl_getinfo($client);
         
-      if ($response_headers['http_code'] == 429)
+      if (in_array($response_headers['http_code'], $this->client_error_codes))
       {
         throw new Exception($response);
+      }
+      elseif (in_array($response_headers['http_code'], $this->server_error_codes)
+      {
+        throw new Exception('Server error');
       }
     }
     
