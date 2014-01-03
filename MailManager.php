@@ -23,6 +23,14 @@ class MailManager
   private $client_error_codes = array(400, 401, 429);
   private $server_error_codes = array(500);
 
+  /**
+   * Create a new instance of the class (one per unique email).
+   *
+   * @param string $dbhost Database host.
+   * @param string $username Database username.
+   * @param string $password Database password.
+   * @param string $dbname Database name.
+   */
   public function __construct($dbhost, $username, $password, $dbname)
   {
     $this->dbhost = $dbhost;
@@ -31,26 +39,51 @@ class MailManager
     $this->dbname = $dbname;
   }
   
+  /**
+   * Set the email subject.
+   *
+   * @param string $subject Email subject.
+   */
   public function set_subject($subject)
   {
     $this->subject = $subject;
   }
   
+  /**
+   * Get the email subject.
+   *
+   * @return string
+   */
   public function get_subject()
   {
     return $this->subject;
   }
   
+  /**
+   * Set the email body.
+   *
+   * @param string $body Email body.
+   */
   public function set_body($body)
   {
     $this->body = $body;
   }
   
+  /**
+   * Get the email body.
+   *
+   * @return string
+   */
   public function get_body()
   {
     return $this->body;
   }
   
+  /**
+   * Add a recipient for this email.
+   *
+   * @param string $email_address Recipient email address.
+   */
   public function add_recipient($email_address)
   {
     if (filter_var($email_address, FILTER_VALIDATE_EMAIL))
@@ -63,6 +96,11 @@ class MailManager
     }
   }
 
+  /**
+   * Get all recipients for this email.
+   *
+   * @return array
+   */
   public function get_recipients()
   {
     return $this->recipients;
@@ -99,6 +137,11 @@ class MailManager
     }
   }
   
+  /**
+   * Send an individual email.
+   *
+   * @param string $email_address Email address to send to.
+   */
   private function send_individual_email($email_address)
   {
     $parameters = array();
@@ -144,6 +187,9 @@ class MailManager
     curl_close($client);
   }
   
+  /**
+   * Send the email
+   */
   public function send()
   {
     $this->validate();
