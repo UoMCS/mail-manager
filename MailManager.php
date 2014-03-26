@@ -176,11 +176,11 @@ class MailManager
         
       if (in_array($response_headers['http_code'], $this->client_error_codes))
       {
-        throw new Exception($response);
+        throw new Exception('Client error: ' . $response_headers['http_code']);
       }
       elseif (in_array($response_headers['http_code'], $this->server_error_codes))
       {
-        throw new Exception('Server error');
+        throw new Exception('Server error: ' . $response_headers['http_code']);
       }
     }
     
