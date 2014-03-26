@@ -178,7 +178,7 @@ class MailManager
       {
         throw new Exception($response);
       }
-      elseif (in_array($response_headers['http_code'], $this->server_error_codes)
+      elseif (in_array($response_headers['http_code'], $this->server_error_codes))
       {
         throw new Exception('Server error');
       }
